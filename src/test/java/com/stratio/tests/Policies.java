@@ -165,7 +165,7 @@ public class Policies {
     public void policies07() throws Exception {
 	String nonExistingPolicy = defaultProps.getProperty("nonExistingPolicy");
 	
-	String url = swagger_url + "/policy/run/" + nonExistingPolicy;
+	String url = swagger_url + "/policy/" + nonExistingPolicy;
 	HttpResponse response = Utils.sendDeleteRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 		
@@ -636,6 +636,82 @@ public class Policies {
 	    }
 	}
     }
+    
+    @Test(description = "Get a policy with empty parameter")
+    public void policies31() throws Exception {
+	String url = swagger_url + "/policy/find/" + "";
+	HttpResponse response = Utils.sendGetRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies31 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies31 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies31 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+    }
+    
+    @Test(description = "Delete a policy with empty parameter")
+    public void policies32() throws Exception {
+	String url = swagger_url + "/policy/" + "";
+	HttpResponse response = Utils.sendDeleteRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+		
+	System.out.println("policies32 Delete Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies32 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies32 Delete Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+    }
+    
+    @Test(description = "Get all policies that contains a fragment with empty type")
+    public void policies33() throws Exception {
+	String url = swagger_url + "/policy/fragment/" + "" + "/" + "name";
+	HttpResponse response = Utils.sendGetRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies33 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies33 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies33 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+    }
+    
+    @Test(description = "Get all policies that contains a fragment with empty name")
+    public void policies34() throws Exception {
+	String url = swagger_url + "/policy/fragment/" + "input" + "/" + "";
+	HttpResponse response = Utils.sendGetRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies34 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies34 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies34 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+    }
+    
+    @Test(description = "Get all policies that contains a fragment with empty type and name")
+    public void policies35() throws Exception {
+	String url = swagger_url + "/policy/fragment/" + "" + "/" + "";
+	HttpResponse response = Utils.sendGetRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies35 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies35 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies35 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+    }
+    
     
     @AfterSuite
     public void cleanPoliciesTest() throws Exception {
