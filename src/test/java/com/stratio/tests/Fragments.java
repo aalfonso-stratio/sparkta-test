@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -44,18 +45,19 @@ public class Fragments {
     
     @Test(description = "Add fragment with missing info (empty name)")
     public void fragments02() throws Exception {
-	// Will it added anyway with default name?!
 	String invalidFragmentNoName = defaultProps.getProperty("invalidFragmentNoName");
+	
 	String url = swagger_url + "/fragment";
 	HttpResponse response = Utils.sendPostRequest(url, invalidFragmentNoName);
+	String responseBody = Utils.getResponseBody(response);
 	
 	System.out.println("fragments02 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments02 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("fragments01 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
-	
-	// Do we need to delete anything?
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertTrue(responseBody.contains("No usable value for name"));
     }
     
     @Test(description = "Add fragment with incorrect type")
@@ -65,16 +67,19 @@ public class Fragments {
 	HttpResponse response = Utils.sendPostRequest(url, invalidFragmentIncorrectType);
 	String responseBody = Utils.getResponseBody(response);
 	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	
 	System.out.println("fragments03 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments03 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments03 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "[]");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "The fragment type must be input|output");	
     }
     
-    @Test(description = "Get all fragments with empty parameter")
+    @Test(description = "Get all fragments with empty type")
     public void fragments04() throws Exception {
 	String url = swagger_url + "/fragment/" + "";
 	HttpResponse response = Utils.sendGetRequest(url);
@@ -84,9 +89,9 @@ public class Fragments {
 	System.out.println("fragments04 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments04 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");	
     }
     
     @Test(description = "Get all fragments with invalid type")
@@ -95,13 +100,16 @@ public class Fragments {
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	
 	System.out.println("fragments05 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments05 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments05 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "[]");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "The fragment type must be input|output");	
     }
     
     @Test(description = "Get all input fragments with no fragments")
@@ -144,9 +152,9 @@ public class Fragments {
 	System.out.println("fragments08 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments08 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");	
     }
     
     @Test(description = "Get fragments with empty name")
@@ -159,9 +167,9 @@ public class Fragments {
 	System.out.println("fragments09 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments09 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");	
     }
     
     @Test(description = "Get fragments with empty name and type")
@@ -174,9 +182,9 @@ public class Fragments {
 	System.out.println("fragments10 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments10 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");	
     }
     
     @Test(description = "Get fragments with invalid type")
@@ -185,43 +193,40 @@ public class Fragments {
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	
 	System.out.println("fragments11 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments11 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments11 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "[]");	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "The fragment type must be input|output");
     }
     
     @Test(description = "Get input fragments with non-existing name with empty list")
     public void fragments12() throws Exception {
 	String url = swagger_url + "/fragment/" + "input" + "/" + "name";
 	HttpResponse response = Utils.sendGetRequest(url);
-	String responseBody = Utils.getResponseBody(response);
 	
 	System.out.println("fragments12 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments12 Response Message: " + response.getStatusLine().getReasonPhrase());
-	System.out.println("fragments12 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
-	Assert.assertEquals(responseBody, "[]");	
     }
     
     @Test(description = "Get output fragments with non-existing name with empty list")
     public void fragments13() throws Exception {
 	String url = swagger_url + "/fragment/" + "output" + "/" + "name";
 	HttpResponse response = Utils.sendGetRequest(url);
-	String responseBody = Utils.getResponseBody(response);
 	
 	System.out.println("fragments13 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments13 Response Message: " + response.getStatusLine().getReasonPhrase());
-	System.out.println("fragments13 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
-	Assert.assertEquals(responseBody, "[]");	
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");	
     }
     
     @Test(description = "Delete a policy with empty type")
@@ -274,6 +279,9 @@ public class Fragments {
 	String url = swagger_url + "/fragment/" + "invalid" + "/" + "name";
 	HttpResponse response = Utils.sendDeleteRequest(url);
 	String responseBody = Utils.getResponseBody(response);
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 		
 	System.out.println("fragments17 Delete Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments17 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
@@ -281,6 +289,7 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "The fragment type must be input|output");
     }
     
     @Test(description = "Delete a fragment with non-existing name and empty list")
@@ -306,8 +315,8 @@ public class Fragments {
 	System.out.println("fragments19 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments19 Response Message: " + response.getStatusLine().getReasonPhrase());
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
     }
     
     @Test(description = "Add valid output fragment")
@@ -319,8 +328,8 @@ public class Fragments {
 	System.out.println("fragments20 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments20 Response Message: " + response.getStatusLine().getReasonPhrase());
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
     }
     
     @Test(description = "Get all input fragments")
@@ -360,6 +369,7 @@ public class Fragments {
     @Test(description = "Get existing input fragment")
     public void fragments23() throws Exception {
 	String validInputFragmentName = defaultProps.getProperty("validInputFragmentName");
+	String validInputFragment = defaultProps.getProperty("validInputFragment");
 	
 	String url = swagger_url + "/fragment/" + "input" + "/" + validInputFragmentName;
 	HttpResponse response = Utils.sendGetRequest(url);
@@ -371,14 +381,13 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
-	
-	JSONArray bodyJson  = new JSONArray(responseBody);
-	Assert.assertEquals(bodyJson.length(), 1);
+	Assert.assertEquals(responseBody, validInputFragment);
     }
     
     @Test(description = "Get existing output fragment")
     public void fragments24() throws Exception {
 	String validOutputFragmentName = defaultProps.getProperty("validOutputFragmentName");
+	String validOutputFragment = defaultProps.getProperty("validOutputFragment");
 	
 	String url = swagger_url + "/fragment/" + "output" + "/" + validOutputFragmentName;
 	HttpResponse response = Utils.sendGetRequest(url);
@@ -390,9 +399,7 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
-	
-	JSONArray bodyJson  = new JSONArray(responseBody);
-	Assert.assertEquals(bodyJson.length(), 1);
+	Assert.assertEquals(responseBody, validOutputFragment);
     }
     
     @Test(description = "Delete a fragment with non-existing name")
@@ -423,13 +430,22 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	
+	// Check no input fragments available
+	String url2 = swagger_url + "/fragment/" + "input";
+	HttpResponse response2 = Utils.sendGetRequest(url2);
+	String responseBody2 = Utils.getResponseBody(response2);
+	
+	JSONArray bodyJson  = new JSONArray(responseBody2);
+	Assert.assertEquals(bodyJson.length(), 0);
+	
     }
     
     @Test(description = "Delete an output fragment")
     public void fragments27() throws Exception {
 	String validOutputFragmentName = defaultProps.getProperty("validOutputFragmentName");
 	
-	String url = swagger_url + "/fragment/" + "input" + "/" + validOutputFragmentName;
+	String url = swagger_url + "/fragment/" + "output" + "/" + validOutputFragmentName;
 	HttpResponse response = Utils.sendDeleteRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 		
@@ -439,6 +455,14 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	
+	// Check no output fragments available
+	String url2 = swagger_url + "/fragment/" + "output";
+	HttpResponse response2 = Utils.sendGetRequest(url2);
+	String responseBody2 = Utils.getResponseBody(response2);
+		
+	JSONArray bodyJson  = new JSONArray(responseBody2);
+	Assert.assertEquals(bodyJson.length(), 0);
     }
     
     @Test(description = "Delete input fragment referenced by policy")
@@ -447,8 +471,10 @@ public class Fragments {
 	String validInputFragment = defaultProps.getProperty("validInputFragment");
 	String url = swagger_url + "/fragment";
 	HttpResponse response = Utils.sendPostRequest(url, validInputFragment);
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+	
+	System.out.println("fragments28: Fragment created");
 	
 	// Add policy
 	String policyInputFragment = defaultProps.getProperty("policyInputFragment");
@@ -456,6 +482,8 @@ public class Fragments {
 	HttpResponse response2 = Utils.sendPostRequest(url2, policyInputFragment);
 	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
 	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
+	
+	System.out.println("fragments28: Policy created");
 	
 	// Delete fragment
 	String validInputFragmentName = defaultProps.getProperty("validInputFragmentName");
@@ -487,8 +515,10 @@ public class Fragments {
 	String validOutputFragment = defaultProps.getProperty("validOutputFragment");
 	String url = swagger_url + "/fragment";
 	HttpResponse response = Utils.sendPostRequest(url, validOutputFragment);
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+	
+	System.out.println("fragments29: Fragment created");
 	
 	// Add policy
 	String policyOutputFragment = defaultProps.getProperty("policyOutputFragment");
@@ -496,6 +526,8 @@ public class Fragments {
 	HttpResponse response2 = Utils.sendPostRequest(url2, policyOutputFragment);
 	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
 	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
+	
+	System.out.println("fragments29: Policy created");
 	
 	// Delete fragment
 	String validOutputFragmentName = defaultProps.getProperty("validOutputFragmentName");
@@ -522,6 +554,7 @@ public class Fragments {
     }
  
     @AfterSuite
-    public void cleanFragmentsTest() throws Exception {
+    public void cleanPoliciesTest() throws Exception {
+	Utils.cleanUp(swagger_url);
     }
 }
