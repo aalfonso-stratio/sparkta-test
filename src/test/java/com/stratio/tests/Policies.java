@@ -26,45 +26,45 @@ public class Policies {
 	defaultProps = new Properties();
 	defaultProps.load(new FileInputStream("policies.properties"));
 	
-	String fragmentExample = defaultProps.getProperty("fragmentExample");
-	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
-		
-	// Create fragment
-	String url = swagger_url + "/fragment";
-	HttpResponse response = Utils.sendPostRequest(url, fragmentExample);
-        
-        System.out.println("preparePoliciesTest: " + response.getStatusLine());
-        
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
-	
-	// Create second fragment
-	HttpResponse response2 = Utils.sendPostRequest(url, fragmentExample2);
-        
-        System.out.println("preparePoliciesTest: " + response2.getStatusLine());
-        
-	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
-	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
-	
-	// Create output fragments
-	String fragmentOutputExample = defaultProps.getProperty("fragmentOutputExample");
-	String fragmentOutputExample2 = defaultProps.getProperty("fragmentOutputExample2");
-	
-	String url3 = swagger_url + "/fragment";
-	HttpResponse response3 = Utils.sendPostRequest(url3, fragmentOutputExample);
-        
-        System.out.println("preparePoliciesTest: " + response3.getStatusLine());
-        
-	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 201);
-	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "Created");
-	
-	String url4 = swagger_url + "/fragment";
-	HttpResponse response4 = Utils.sendPostRequest(url4, fragmentOutputExample2);
-        
-        System.out.println("preparePoliciesTest: " + response4.getStatusLine());
-        
-	Assert.assertEquals(response4.getStatusLine().getStatusCode(), 201);
-	Assert.assertEquals(response4.getStatusLine().getReasonPhrase(), "Created");	
+//	String fragmentExample = defaultProps.getProperty("fragmentExample");
+//	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
+//		
+//	// Create fragment
+//	String url = swagger_url + "/fragment";
+//	HttpResponse response = Utils.sendPostRequest(url, fragmentExample);
+//        
+//        System.out.println("preparePoliciesTest: " + response.getStatusLine());
+//        
+//	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+//	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+//	
+//	// Create second fragment
+//	HttpResponse response2 = Utils.sendPostRequest(url, fragmentExample2);
+//        
+//        System.out.println("preparePoliciesTest: " + response2.getStatusLine());
+//        
+//	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
+//	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
+//	
+//	// Create output fragments
+//	String fragmentOutputExample = defaultProps.getProperty("fragmentOutputExample");
+//	String fragmentOutputExample2 = defaultProps.getProperty("fragmentOutputExample2");
+//	
+//	String url3 = swagger_url + "/fragment";
+//	HttpResponse response3 = Utils.sendPostRequest(url3, fragmentOutputExample);
+//        
+//        System.out.println("preparePoliciesTest: " + response3.getStatusLine());
+//        
+//	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 201);
+//	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "Created");
+//	
+//	String url4 = swagger_url + "/fragment";
+//	HttpResponse response4 = Utils.sendPostRequest(url4, fragmentOutputExample2);
+//        
+//        System.out.println("preparePoliciesTest: " + response4.getStatusLine());
+//        
+//	Assert.assertEquals(response4.getStatusLine().getStatusCode(), 201);
+//	Assert.assertEquals(response4.getStatusLine().getReasonPhrase(), "Created");	
     }
 
     @Test(description = "Get all policies when no policies available")
@@ -292,8 +292,8 @@ public class Policies {
 	System.out.println("policies14 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies14 Response Message: " + response.getStatusLine().getReasonPhrase());
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
     }
   
     @Test(description = "Update a existing policy")
@@ -650,9 +650,9 @@ public class Policies {
 	System.out.println("policies31 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies31 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
     
     @Test(description = "Delete a policy with empty parameter")
@@ -680,9 +680,9 @@ public class Policies {
 	System.out.println("policies33 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies33 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
     
     @Test(description = "Get all policies that contains a fragment with empty name")
@@ -695,9 +695,9 @@ public class Policies {
 	System.out.println("policies34 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies34 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
     
     @Test(description = "Get all policies that contains a fragment with empty type and name")
@@ -710,9 +710,9 @@ public class Policies {
 	System.out.println("policies35 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies35 Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
     
     @Test(description = "Add a policy with input and one input fragment")
@@ -735,8 +735,8 @@ public class Policies {
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
     
-    @AfterSuite
-    public void cleanPoliciesTest() throws Exception {
-	Utils.cleanUp(swagger_url);
-    }
+//    @AfterSuite
+//    public void cleanPoliciesTest() throws Exception {
+//	Utils.cleanUp(swagger_url);
+//    }
 }
