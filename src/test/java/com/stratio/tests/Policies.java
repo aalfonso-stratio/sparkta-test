@@ -712,6 +712,26 @@ public class Policies {
 	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
     }
     
+    @Test(description = "Add a policy with input and one input fragment")
+    public void policies36() throws Exception {
+	String policyOneInputOneFragment = defaultProps.getProperty("policyOneInputOneFragment");
+		
+	String url = swagger_url + "/policy";
+	HttpResponse response = Utils.sendPostRequest(url, policyOneInputOneFragment);
+	String responseBody = Utils.getResponseBody(response);
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	
+	System.out.println("policies36 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies36 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies36 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "Only one input is allowed in the policy.");
+    }
+    
     @AfterSuite
     public void cleanPoliciesTest() throws Exception {
 	Utils.cleanUp(swagger_url);
