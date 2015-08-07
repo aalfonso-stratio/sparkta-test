@@ -2,19 +2,24 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Swagger API">
-<!--     <test name="policies"> -->
-<!--         <classes> -->
-<!--             <class name="com.stratio.tests.Policies"/> -->
-<!--         </classes> -->
-<!--     </test> -->
-	<test name="fragments">
+    <test name="policies">
         <classes>
-            <class name="com.stratio.tests.Fragments"/>
+            <class name="com.stratio.tests.Policies"/>
         </classes>
     </test>
+<!-- 	<test name="fragments"> -->
+<!--         <classes> -->
+<!--             <class name="com.stratio.tests.Fragments"/> -->
+<!--         </classes> -->
+<!--     </test> -->
 <!--     <test name="templates"> -->
 <!--         <classes> -->
 <!--             <class name="com.stratio.tests.Templates"/> -->
+<!--         </classes> -->
+<!--     </test> -->
+<!-- 	<test name="policyContexts"> -->
+<!--         <classes> -->
+<!--             <class name="com.stratio.tests.PolicyContexts"/> -->
 <!--         </classes> -->
 <!--     </test> -->
 </suite>

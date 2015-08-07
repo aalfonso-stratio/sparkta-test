@@ -26,45 +26,45 @@ public class Policies {
 	defaultProps = new Properties();
 	defaultProps.load(new FileInputStream("policies.properties"));
 	
-//	String fragmentExample = defaultProps.getProperty("fragmentExample");
-//	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
-//		
-//	// Create fragment
-//	String url = swagger_url + "/fragment";
-//	HttpResponse response = Utils.sendPostRequest(url, fragmentExample);
-//        
-//        System.out.println("preparePoliciesTest: " + response.getStatusLine());
-//        
-//	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
-//	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
-//	
-//	// Create second fragment
-//	HttpResponse response2 = Utils.sendPostRequest(url, fragmentExample2);
-//        
-//        System.out.println("preparePoliciesTest: " + response2.getStatusLine());
-//        
-//	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
-//	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
-//	
-//	// Create output fragments
-//	String fragmentOutputExample = defaultProps.getProperty("fragmentOutputExample");
-//	String fragmentOutputExample2 = defaultProps.getProperty("fragmentOutputExample2");
-//	
-//	String url3 = swagger_url + "/fragment";
-//	HttpResponse response3 = Utils.sendPostRequest(url3, fragmentOutputExample);
-//        
-//        System.out.println("preparePoliciesTest: " + response3.getStatusLine());
-//        
-//	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 201);
-//	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "Created");
-//	
-//	String url4 = swagger_url + "/fragment";
-//	HttpResponse response4 = Utils.sendPostRequest(url4, fragmentOutputExample2);
-//        
-//        System.out.println("preparePoliciesTest: " + response4.getStatusLine());
-//        
-//	Assert.assertEquals(response4.getStatusLine().getStatusCode(), 201);
-//	Assert.assertEquals(response4.getStatusLine().getReasonPhrase(), "Created");	
+	String fragmentExample = defaultProps.getProperty("fragmentExample");
+	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
+		
+	// Create fragment
+	String url = swagger_url + "/fragment";
+	HttpResponse response = Utils.sendPostRequest(url, fragmentExample);
+        
+        System.out.println("preparePoliciesTest: " + response.getStatusLine());
+        
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+	
+	// Create second fragment
+	HttpResponse response2 = Utils.sendPostRequest(url, fragmentExample2);
+        
+        System.out.println("preparePoliciesTest: " + response2.getStatusLine());
+        
+	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Created");
+	
+	// Create output fragments
+	String fragmentOutputExample = defaultProps.getProperty("fragmentOutputExample");
+	String fragmentOutputExample2 = defaultProps.getProperty("fragmentOutputExample2");
+	
+	String url3 = swagger_url + "/fragment";
+	HttpResponse response3 = Utils.sendPostRequest(url3, fragmentOutputExample);
+        
+        System.out.println("preparePoliciesTest: " + response3.getStatusLine());
+        
+	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "Created");
+	
+	String url4 = swagger_url + "/fragment";
+	HttpResponse response4 = Utils.sendPostRequest(url4, fragmentOutputExample2);
+        
+        System.out.println("preparePoliciesTest: " + response4.getStatusLine());
+        
+	Assert.assertEquals(response4.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response4.getStatusLine().getReasonPhrase(), "Created");	
     }
 
     @Test(description = "Get all policies when no policies available")
@@ -490,8 +490,11 @@ public class Policies {
 	
 	String url = swagger_url + "/policy";
 	HttpResponse response = Utils.sendPostRequest(url, policyExampleTwoFragments);
-
-	System.out.println("policies23: " + response.getStatusLine());
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies23 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies23 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies23 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
