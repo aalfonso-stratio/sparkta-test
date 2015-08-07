@@ -58,7 +58,7 @@ public class Templates {
     public void templates03() throws Exception {
 	String input_templates = defaultProps.getProperty("input_templates");
 	
-	String url = swagger_url + "/template/" + "inputs";
+	String url = swagger_url + "/template/" + "input";
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
@@ -76,7 +76,7 @@ public class Templates {
     public void templates04() throws Exception {
 	String outputs_templates = defaultProps.getProperty("outputs_templates");
 	
-	String url = swagger_url + "/template/" + "outputs";
+	String url = swagger_url + "/template/" + "output";
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
