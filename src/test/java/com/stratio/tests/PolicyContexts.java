@@ -17,7 +17,7 @@ public class PolicyContexts {
     Properties defaultProps;
     
     @BeforeSuite
-    public void preparePoliciesTest() throws Exception {
+    public void preparePolicyContextsTest() throws Exception {
 	// Read properties file
 	Properties swaggerProps = new Properties();
 	swaggerProps.load(new FileInputStream("swagger.properties"));
