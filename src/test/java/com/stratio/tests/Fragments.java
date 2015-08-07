@@ -496,8 +496,8 @@ public class Fragments {
 	System.out.println("fragments28 Response Message: " + response3.getStatusLine().getReasonPhrase());
 	System.out.println("fragments28 Response Body: " + responseBody3);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 200);
+	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "OK");
 	
 	// Check no policies available
 	String url4 = swagger_url + "/policy/all";
@@ -540,8 +540,8 @@ public class Fragments {
 	System.out.println("fragments29 Response Message: " + response3.getStatusLine().getReasonPhrase());
 	System.out.println("fragments29 Response Body: " + responseBody3);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	Assert.assertEquals(response3.getStatusLine().getStatusCode(), 200);
+	Assert.assertEquals(response3.getStatusLine().getReasonPhrase(), "OK");
 	
 	// Check no policies available
 	String url4 = swagger_url + "/policy/all";

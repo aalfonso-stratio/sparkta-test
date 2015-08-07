@@ -7,19 +7,19 @@
             <class name="com.stratio.tests.Policies"/>
         </classes>
     </test>
-<!-- 	<test name="fragments"> -->
-<!--         <classes> -->
-<!--             <class name="com.stratio.tests.Fragments"/> -->
-<!--         </classes> -->
-<!--     </test> -->
-<!--     <test name="templates"> -->
-<!--         <classes> -->
-<!--             <class name="com.stratio.tests.Templates"/> -->
-<!--         </classes> -->
-<!--     </test> -->
-<!-- 	<test name="policyContexts"> -->
-<!--         <classes> -->
-<!--             <class name="com.stratio.tests.PolicyContexts"/> -->
-<!--         </classes> -->
-<!--     </test> -->
+	<test name="fragments">
+        <classes>
+            <class name="com.stratio.tests.Fragments"/>
+        </classes>
+    </test>
+    <test name="templates">
+        <classes>
+            <class name="com.stratio.tests.Templates"/>
+        </classes>
+    </test>
+	<test name="policyContexts">
+        <classes>
+            <class name="com.stratio.tests.PolicyContexts"/>
+        </classes>
+    </test>
 </suite>
