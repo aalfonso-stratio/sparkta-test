@@ -239,9 +239,9 @@ public class Fragments {
 	System.out.println("fragments14 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments14 Delete Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 405);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Method Not Allowed");
+	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
     @Test(description = "Delete a policy with empty name")
@@ -254,9 +254,9 @@ public class Fragments {
 	System.out.println("fragments15 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments15 Delete Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 405);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Method Not Allowed");
+	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
     @Test(description = "Delete a policy with empty type and name")
@@ -269,9 +269,9 @@ public class Fragments {
 	System.out.println("fragments16 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments16 Delete Response Body: " + responseBody);
 	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 405);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Method Not Allowed");
+	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
     @Test(description = "Delete a policy with invalid type")
