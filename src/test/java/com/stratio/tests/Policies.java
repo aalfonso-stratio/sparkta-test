@@ -26,6 +26,8 @@ public class Policies {
 	defaultProps = new Properties();
 	defaultProps.load(new FileInputStream("policies.properties"));
 	
+	Utils.cleanUp(swagger_url);
+	
 	String fragmentExample = defaultProps.getProperty("fragmentExample");
 	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
 		
@@ -192,7 +194,7 @@ public class Policies {
 	Assert.assertEquals(responseBody, "Request entity expected but not supplied");
     }
     
-    @Test(description = "Add a policy with missing information")
+    @Test(description = "Add a policy with missing name")
     public void policies09() throws Exception {
 	// This test will fail (policy should be checked)
 	// If no name, policy is created with name = "default" **WRONG**
@@ -326,20 +328,6 @@ public class Policies {
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
     }
-    
-//    @Test(description = "Run an empty policy")
-//    public void policiesXX() throws Exception {
-//	String url = swagger_url + "/policy/run/" + "";
-//	HttpResponse response = Utils.sendGetRequest(url);
-//	String responseBody = Utils.getResponseBody(response);
-//	
-//	System.out.println("policiesXX Response Code: " + response.getStatusLine().getStatusCode());
-//	System.out.println("policiesXX Response Message: " + response.getStatusLine().getReasonPhrase());
-//	System.out.println("policiesXX Response Body: " + responseBody);
-//	
-//	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
-//	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
-//    }
     
     @Test(description = "Run a existing policy")
     public void policies17() throws Exception {
@@ -739,6 +727,62 @@ public class Policies {
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
+    
+    @Test(description = "Add a policy with missing input")
+    public void policies36() throws Exception {
+	String policyNoInput = defaultProps.getProperty("policyNoInput");
+	
+	String url = swagger_url + "/policy";
+	HttpResponse response = Utils.sendPostRequest(url, policyNoInput);
+	String responseBody = Utils.getResponseBody(response);
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	
+	System.out.println("policies36 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies36 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies36 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(message, "It is mandatory to define one input in the policy.");
+    }
+    
+    @Test(description = "Add a policy with missing outputs")
+    public void policies37() throws Exception {
+	String policyNoOutput = defaultProps.getProperty("policyNoOutput");
+	
+	String url = swagger_url + "/policy";
+	HttpResponse response = Utils.sendPostRequest(url, policyNoOutput);
+	String responseBody = Utils.getResponseBody(response);
+	
+//	JSONObject responseJSON = new JSONObject(responseBody);
+//	String message = responseJSON.get("message").toString();
+	
+	System.out.println("policies37 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies37 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies37 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+//	Assert.assertEquals(message, "It is mandatory to define at least one output in the policy.");
+    }
+    
+    @Test(description = "Run an empty policy")
+    public void policies38() throws Exception {
+	String url = swagger_url + "/policy/run/" + "";
+	HttpResponse response = Utils.sendGetRequest(url);
+	String responseBody = Utils.getResponseBody(response);
+	
+	System.out.println("policies38 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies38 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies38 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	Assert.assertEquals(responseBody, "The requested resource could not be found.");
+    }
+    
     
     @AfterSuite
     public void cleanPoliciesTest() throws Exception {
