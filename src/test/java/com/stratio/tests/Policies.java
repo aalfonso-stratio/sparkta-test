@@ -765,6 +765,28 @@ public class Policies {
 	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
     
+    @Test(description = "Add a policy with missing cubes")
+    public void policies39() throws Exception {
+	// It should not be possible to add a policy with no cubes defined
+	// This test will fail, as at the moment there is no validation
+	String policyNoCubes = defaultProps.getProperty("policyNoCubes");
+	
+	String url = swagger_url + "/policy";
+	HttpResponse response = Utils.sendPostRequest(url, policyNoCubes);
+	String responseBody = Utils.getResponseBody(response);
+		
+	System.out.println("policies39 Response Code: " + response.getStatusLine().getStatusCode());
+	System.out.println("policies39 Response Message: " + response.getStatusLine().getReasonPhrase());
+	System.out.println("policies39 Response Body: " + responseBody);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
+	Assert.assertEquals(message, "It is mandatory to define one cube in the policy.");
+    }
+    
     @AfterSuite
     public void cleanPoliciesTest() throws Exception {
 	Utils.cleanUp(swagger_url);
