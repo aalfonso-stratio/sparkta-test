@@ -26,7 +26,8 @@ public class Policies {
 	defaultProps = new Properties();
 	defaultProps.load(new FileInputStream("policies.properties"));
 	
-	Utils.cleanUp(swagger_url);
+	// Make sure everything is clean
+	//Utils.cleanUp(swagger_url);
 	
 	String fragmentExample = defaultProps.getProperty("fragmentExample");
 	String fragmentExample2 = defaultProps.getProperty("fragmentExample2");
@@ -492,25 +493,6 @@ public class Policies {
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
 
-// NOT VALID ANY MORE, WE SHOULD HAVE NO POLICY WITH 2 INPUT FRAGMENTS
-//    @Test(description = "Run a policy with 2 existing input fragments")
-//    public void policies24() throws Exception {
-//	// It is not possible to run a policy with 2 input fragments	
-//	String policyTwoFragmentsName = defaultProps.getProperty("policyTwoFragmentsName");
-//	
-//	String url = swagger_url + "/policy/run/" + policyTwoFragmentsName;
-//	HttpResponse response = Utils.sendGetRequest(url);
-//	String responseBody = Utils.getResponseBody(response);
-//	
-//	System.out.println("policies24 Response Code: " + response.getStatusLine().getStatusCode());
-//	System.out.println("policies24 Response Message: " + response.getStatusLine().getReasonPhrase());
-//	System.out.println("policies24 Response Body: " + responseBody);
-//	
-//	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-//	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-//	Assert.assertTrue(responseBody.contains("error: array must not contain duplicate elements"));
-//    }
-    
     @Test(description = "Add a policy with existing fragment")
     public void policies24() throws Exception {
 	String policyExampleOneFragment = defaultProps.getProperty("policyExampleOneFragment");
@@ -756,8 +738,8 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyNoOutput);
 	String responseBody = Utils.getResponseBody(response);
 	
-//	JSONObject responseJSON = new JSONObject(responseBody);
-//	String message = responseJSON.get("message").toString();
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	
 	System.out.println("policies37 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies37 Response Message: " + response.getStatusLine().getReasonPhrase());
@@ -765,7 +747,7 @@ public class Policies {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
-//	Assert.assertEquals(message, "It is mandatory to define at least one output in the policy.");
+	Assert.assertEquals(message, "It is mandatory to define at least one output in the policy.");
     }
     
     @Test(description = "Run an empty policy")
@@ -782,7 +764,6 @@ public class Policies {
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
 	Assert.assertEquals(responseBody, "The requested resource could not be found.");
     }
-    
     
     @AfterSuite
     public void cleanPoliciesTest() throws Exception {
