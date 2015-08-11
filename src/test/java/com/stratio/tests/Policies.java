@@ -462,13 +462,13 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyExampleNonExistingFragment);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("policies22: " + response.getStatusLine());
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "KeeperErrorCode = NoNode for /stratio/sparkta/fragments/input/myFragment");
     }
     
@@ -481,15 +481,15 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyExampleTwoFragments);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("policies23 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies23 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies23 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
 
@@ -698,15 +698,15 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyOneInputOneFragment);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("policies35 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies35 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies35 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
     
@@ -718,15 +718,15 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyNoInput);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("policies36 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies36 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies36 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "It is mandatory to define one input in the policy.");
     }
     
@@ -738,15 +738,15 @@ public class Policies {
 	HttpResponse response = Utils.sendPostRequest(url, policyNoOutput);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("policies37 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("policies37 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("policies37 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "It is mandatory to define at least one output in the policy.");
     }
     

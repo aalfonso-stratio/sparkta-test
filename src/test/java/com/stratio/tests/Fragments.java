@@ -142,7 +142,7 @@ public class Fragments {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Bad Request");
-	Assert.assertTrue(responseBody.contains("No usable value for description"));
+	Assert.assertTrue(responseBody.contains("No usable value for element"));
     }
     
     @Test(description = "Add fragment with incorrect type")
@@ -152,15 +152,15 @@ public class Fragments {
 	HttpResponse response = Utils.sendPostRequest(url, invalidFragmentIncorrectType);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("fragments08 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments08 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments08 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+	
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "The fragment type must be input|output");	
     }
     
@@ -185,15 +185,15 @@ public class Fragments {
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("fragments10 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments10 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments10 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "The fragment type must be input|output");	
     }
     
@@ -278,15 +278,15 @@ public class Fragments {
 	HttpResponse response = Utils.sendGetRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-	
 	System.out.println("fragments16 Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments16 Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments16 Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "The fragment type must be input|output");
     }
     
@@ -365,15 +365,15 @@ public class Fragments {
 	HttpResponse response = Utils.sendDeleteRequest(url);
 	String responseBody = Utils.getResponseBody(response);
 	
-	JSONObject responseJSON = new JSONObject(responseBody);
-	String message = responseJSON.get("message").toString();
-		
 	System.out.println("fragments22 Delete Response Code: " + response.getStatusLine().getStatusCode());
 	System.out.println("fragments22 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
 	System.out.println("fragments22 Delete Response Body: " + responseBody);
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
+
+	JSONObject responseJSON = new JSONObject(responseBody);
+	String message = responseJSON.get("message").toString();
 	Assert.assertEquals(message, "The fragment type must be input|output");
     }
     
