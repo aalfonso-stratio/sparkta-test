@@ -2,24 +2,59 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Swagger API">
-    <test name="policies">
+    <test name="Policies GET">
         <classes>
-            <class name="com.stratio.tests.Policies"/>
+            <class name="com.stratio.tests.policies.Get"/>
         </classes>
     </test>
-	<test name="fragments">
+    <test name="Policies DELETE">
         <classes>
-            <class name="com.stratio.tests.Fragments"/>
+            <class name="com.stratio.tests.policies.Delete"/>
         </classes>
     </test>
-    <test name="templates">
+    <test name="Policies PUT">
         <classes>
-            <class name="com.stratio.tests.Templates"/>
+            <class name="com.stratio.tests.policies.Put"/>
         </classes>
     </test>
-	<test name="policyContexts">
+    <test name="Policies POST">
         <classes>
-            <class name="com.stratio.tests.PolicyContexts"/>
+            <class name="com.stratio.tests.policies.Post"/>
+        </classes>
+    </test>
+	<test name="Fragments GET">
+        <classes>
+            <class name="com.stratio.tests.fragments.Get"/>
+        </classes>
+    </test>
+    <test name="Fragments DELETE">
+        <classes>
+            <class name="com.stratio.tests.fragments.Delete"/>
+        </classes>
+    </test>
+    <test name="Fragments POST">
+        <classes>
+            <class name="com.stratio.tests.fragments.Post"/>
+        </classes>
+    </test>
+    <test name="Templates GET">
+        <classes>
+            <class name="com.stratio.tests.templates.Get"/>
+        </classes>
+    </test>
+	<test name="Policy Contexts GET">
+        <classes>
+            <class name="com.stratio.tests.policyContexts.Get"/>
+        </classes>
+    </test>
+    <test name="Policy Contexts DELETE">
+        <classes>
+            <class name="com.stratio.tests.policyContexts.Delete"/>
+        </classes>
+    </test>
+    <test name="Policy Contexts POST">
+        <classes>
+            <class name="com.stratio.tests.policyContexts.Post"/>
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package com.stratio.tests;
+package com.stratio.tests.templates;
 
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -6,17 +6,17 @@ import java.util.Properties;
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.stratio.tests.utils.Utils;
 
-public class Templates {
+public class Get {
     Properties defaultProps;
     String swagger_url;
     
-    @BeforeSuite
+    @BeforeTest
     public void prepareTemplatesTest() throws Exception {
 	// Read properties file
 	Properties swaggerProps = new Properties();
@@ -25,6 +25,8 @@ public class Templates {
 	defaultProps = new Properties();
 	defaultProps.load(new FileInputStream("templates.properties"));
 
+	// Clean everything
+	Utils.cleanUp(swagger_url);
     }
     
     @Test(description = "Get all templates with empty parameter")
