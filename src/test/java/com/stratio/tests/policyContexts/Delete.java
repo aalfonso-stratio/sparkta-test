@@ -61,6 +61,18 @@ public class Delete {
     
     @Test(description = "Delete non-existing policy context")
     public void delete03() throws Exception {
+	// Need to add a policy context
+	String policyExample = defaultProps.getProperty("policyExample");	
+	
+	String url = swagger_url + "/policyContext";
+	HttpResponse response = Utils.sendPostRequest(url, policyExample);
+
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
+	
+	System.out.println("delete04: Policy Context added.");
+
+	// Delete non-existing policyContext
 	String url = swagger_url + "/policyContext/" + "name";
 	HttpResponse response = Utils.sendDeleteRequest(url);
 	String responseBody = Utils.getResponseBody(response);
@@ -77,17 +89,6 @@ public class Delete {
     
     @Test(description = "Delete policy context")
     public void delete04() throws Exception {
-	// Need to add a policy context
-	String policyExample = defaultProps.getProperty("policyExample");	
-	
-	String url = swagger_url + "/policyContext";
-	HttpResponse response = Utils.sendPostRequest(url, policyExample);
-
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
-	
-	System.out.println("delete04: Policy Context added.");
-	
 	// Delete policy Context
 	String policyExampleName = defaultProps.getProperty("policyExampleName");
 	

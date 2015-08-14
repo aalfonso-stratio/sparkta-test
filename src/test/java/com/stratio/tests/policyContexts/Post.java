@@ -186,7 +186,7 @@ public class Post {
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "OK");
     }
     
-    @Test(description = "Add a policy with non-existing fragment")
+    @Test(description = "Add a policy context with non-existing fragment")
     public void post07() throws Exception {
 	String policyExampleNonExistingFragment = defaultProps.getProperty("policyExampleNonExistingFragment");
 	
@@ -204,7 +204,7 @@ public class Post {
 	Assert.assertEquals(message, "KeeperErrorCode = NoNode for /stratio/sparkta/fragments/input/myFragment");
     }
     
-    @Test(description = "Add a policy with 2 existing input fragments")
+    @Test(description = "Add a policy context with 2 existing input fragments")
     public void post08() throws Exception {
 	// It is possible to add a policy with two inputs	
 	String policyExampleTwoFragments = defaultProps.getProperty("policyExampleTwoFragments");
@@ -225,7 +225,7 @@ public class Post {
 	Assert.assertEquals(message, "Only one input is allowed in the policy.");
     }
     
-    @Test(description = "Add a policy with existing fragment")
+    @Test(description = "Add a policy context with existing fragment")
     public void post09() throws Exception {
 	String policyExampleOneFragment = defaultProps.getProperty("policyExampleOneFragment");
 	String policyExampleOneFragmentName = defaultProps.getProperty("policyExampleOneFragmentName");
@@ -246,7 +246,7 @@ public class Post {
 	Assert.assertEquals(message, "Creating new context with name " + policyExampleOneFragmentName);
     }
     
-    @Test(description = "Add a policy with 2 existing output fragments")
+    @Test(description = "Add a policy context with 2 existing output fragments")
     public void post10() throws Exception {
 	String policyExampleTwoOutputFragments = defaultProps.getProperty("policyExampleTwoOutputFragments");
 	String policyTwoOutputFragmentsName = defaultProps.getProperty("policyTwoOutputFragmentsName");
@@ -267,7 +267,7 @@ public class Post {
 	Assert.assertEquals(message, "Creating new context with name " + policyTwoOutputFragmentsName);
     }
     
-    @Test(description = "Add a policy with input and one input fragment")
+    @Test(description = "Add a policy context with input and one input fragment")
     public void post11() throws Exception {
 	String policyOneInputOneFragment = defaultProps.getProperty("policyOneInputOneFragment");
 		
