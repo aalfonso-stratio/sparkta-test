@@ -30,7 +30,7 @@ public class Delete {
 	Utils.cleanUp(swagger_url);
     }
     
-    @Test(description = "Delete a policy with empty type")
+    @Test(description = "Delete a fragment with empty type")
     public void delete01() throws Exception {
 	String url = swagger_url + "/fragment/" + "" + "/" + "name";
 	HttpResponse response = Utils.sendDeleteRequest(url);
@@ -45,7 +45,7 @@ public class Delete {
 	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
-    @Test(description = "Delete a policy with empty name")
+    @Test(description = "Delete a fragment with empty name")
     public void delete02() throws Exception {
 	String url = swagger_url + "/fragment/" + "input" + "/" + "";
 	HttpResponse response = Utils.sendDeleteRequest(url);
@@ -60,7 +60,7 @@ public class Delete {
 	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
-    @Test(description = "Delete a policy with empty type and name")
+    @Test(description = "Delete a fragment with empty type and name")
     public void delete03() throws Exception {
 	String url = swagger_url + "/fragment/" + "" + "/" + "";
 	HttpResponse response = Utils.sendDeleteRequest(url);
@@ -75,7 +75,7 @@ public class Delete {
 	Assert.assertEquals(responseBody, "HTTP method not allowed, supported methods: GET");
     }
     
-    @Test(description = "Delete a policy with invalid type")
+    @Test(description = "Delete a fragment with invalid type")
     public void delete04() throws Exception {
 	String url = swagger_url + "/fragment/" + "invalid" + "/" + "name";
 	HttpResponse response = Utils.sendDeleteRequest(url);
@@ -109,20 +109,6 @@ public class Delete {
     
     @Test(description = "Delete a fragment with non-existing name")
     public void delete06() throws Exception {
-	String url = swagger_url + "/fragment/" + "input" + "/" + "name";
-	HttpResponse response = Utils.sendDeleteRequest(url);
-	String responseBody = Utils.getResponseBody(response);
-		
-	System.out.println("delete06 Delete Response Code: " + response.getStatusLine().getStatusCode());
-	System.out.println("delete06 Delete Response Message: " + response.getStatusLine().getReasonPhrase());
-	System.out.println("delete06 Delete Response Body: " + responseBody);
-	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 404);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Not Found");
-    }
-    
-    @Test(description = "Delete an input fragment")
-    public void delete07() throws Exception {
 	// Add input fragment
 	String validInputFragment = defaultProps.getProperty("validInputFragment");
 	String url = swagger_url + "/fragment";
@@ -130,7 +116,23 @@ public class Delete {
 	
 	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
 	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+
+	// Delete non-existing fragment
+	String url2 = swagger_url + "/fragment/" + "input" + "/" + "name";
+	HttpResponse response2 = Utils.sendDeleteRequest(url2);
+	String responseBody2 = Utils.getResponseBody(response2);
+		
+	System.out.println("delete06 Delete Response Code: " + response2.getStatusLine().getStatusCode());
+	System.out.println("delete06 Delete Response Message: " + response2.getStatusLine().getReasonPhrase());
+	System.out.println("delete06 Delete Response Body: " + responseBody2);
 	
+	Assert.assertEquals(response2.getStatusLine().getStatusCode(), 404);
+	Assert.assertEquals(response2.getStatusLine().getReasonPhrase(), "Not Found");
+    }
+    
+    @Test(description = "Delete an input fragment")
+    public void delete07() throws Exception {
+	// It has been added by previous test case
 	// Delete input fragment
 	String validInputFragmentName = defaultProps.getProperty("validInputFragmentName");
 	
