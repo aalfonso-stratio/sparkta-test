@@ -97,6 +97,16 @@ public class Get {
     
     @Test(description = "Get a non-exisiting policy")
     public void get05() throws Exception {
+	// Add policy
+	String policyExample = defaultProps.getProperty("policyExample");
+	
+	String url = swagger_url + "/policy";
+	HttpResponse response = Utils.sendPostRequest(url, policyExample);
+	
+	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
+	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
+
+	// Get non-existing policy
 	String nonExistingPolicy = defaultProps.getProperty("nonExistingPolicy");
 	
 	String url = swagger_url + "/policy/find/" + nonExistingPolicy;
@@ -113,15 +123,6 @@ public class Get {
     
     @Test(description = "Get a existing policy")
     public void get06() throws Exception {
-	// Add policy
-	String policyExample = defaultProps.getProperty("policyExample");
-	
-	String url = swagger_url + "/policy";
-	HttpResponse response = Utils.sendPostRequest(url, policyExample);
-	
-	Assert.assertEquals(response.getStatusLine().getStatusCode(), 201);
-	Assert.assertEquals(response.getStatusLine().getReasonPhrase(), "Created");
-	
 	// Get policy
 	String existingPolicy = defaultProps.getProperty("existingPolicy");
 	String policyExampleReturned = defaultProps.getProperty("policyExampleReturned");
